@@ -1,0 +1,56 @@
+from django.shortcuts import render
+from django.db import models
+from home.models import AppUser, AppMessage
+from django.db.models import Q
+from django.http import JsonResponse,HttpResponse
+
+# Create your views here.
+
+
+def index(request, oid):
+	u      = AppUser.objects.all().filter(id = oid)
+	others = AppUser.objects.filter(~Q(id = oid))
+
+	return render(request, 'index.html', {'user': [u], 'others':[others]})
+
+
+def requestMessages(request, u1, u2):
+	messages = (AppMessage.objects.filter(whoSent = u1).filter(whoRecv = u2) | AppMessage.objects.filter(whoSent = u2).filter(whoRecv = u1)).order_by('id')
+	for m in messages:
+		print(m.msg)
+	data = {
+		'messages' : list(messages.values())
+	}
+	
+	#return ret
+	return  JsonResponse(data)
+def requestMessages1(request, u1, u2, lastIdLoaded):
+	messages = (AppMessage.objects.filter(id > lastIdLoaded).filter(whoSent = u1).filter(whoRecv = u2) | AppMessage.objects.filter(whoSent = u2).filter(whoRecv = u1)).order_by('id')
+	for m in messages:
+		print(m.msg)
+	data = {
+		'messages' : list(messages.values())
+	}
+	
+	#return ret
+	return  JsonResponse({'count':messages})
+
+def countUnreadMessages(request,userId, idSent):
+	counts = []
+	for ids in idSent:
+		messages = AppMessage.objects.filter(whoSent = idSent).filter(whoRecv = userId).filter(read=False).order_by('id').count()
+		counts.append(messages)
+	return JsonResponse({'count': counts})
+
+def insertNewMessage(request, u1, u2, msg):
+	u1db = AppUser.objects.get(id=u1)
+	u2db = AppUser.objects.get(id=u2)
+	AppMessage.objects.create(whoSent=u1db, whoRecv=u2db,msg=msg)
+	return HttpResponse(request, "<h1>ok</h1>")
+
+def requestFriends(request, userId):
+	others = AppUser.objects.filter(~Q(id = userId))
+	data = {
+		'friends' : list(others.values())
+	}
+	return  JsonResponse(data)

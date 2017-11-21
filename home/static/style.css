@@ -1,0 +1,74 @@
+body{
+	padding: 4px;
+}
+#chat-container{
+	padding:0;
+	margin: 0;
+	min-height: 500px;
+	position: relative;
+	margin-left: 5%;
+}
+
+#chat-header{
+	background: #EEE;
+	height: 10%;
+	width: 100%;
+	border-bottom:1px solid #CCC;
+	bottom:87%;
+	position: absolute;
+}
+#texting-area{
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	height: 10%;
+	width: 100%;
+	bottom:2.8%;
+}
+#texting-area textarea{
+	width: 100%;
+	height: 20%;
+}
+.message-content-area{
+	position: absolute;
+	height: 74.5%;
+	bottom: 11%;
+	width: 97%;
+	left:1.5%;
+	overflow-y: scroll;
+}
+#chat-bar{
+	min-height: 500px;
+	border:1px solid #000;
+}
+.friend-container {
+	border-bottom: 1px solid #EEE;
+	width: 100%;
+}
+.user-img-small{
+	border:1px solid #fff;
+	height: 100%;
+}
+.user-img-small img{
+	border-radius: 50%;
+	height: 100%;
+	width: 100%;
+}
+.user-friend-info {
+	border: 1px solid #fff;
+}
+.message-content {
+	width: 30%;
+	height: 10%;
+	min-height: 10%;
+}
+
+.friend-message {
+	clear:right;
+}
+
+.user-message {
+	float: right;
+	clear:left;
+	clear: right;
+}

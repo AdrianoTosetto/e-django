@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat</title>
+	<!--<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">-->
+
+	
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "materialize/css/materialize.css" %}">
+	<script type="text/javascript" src="{% static "jquery.js" %}"></script>
+	<script type="text/javascript" src="{% static "requests.js" %}"></script>
+	<script type="text/javascript" src="{% static "materialize/js/materialize.js" %}"></script>
+</head>
+<body>
+<header>
+	
+</header>
+
+<div id="content-container">
+	<div class="row">
+		<div id="chat-container" class="col s7" style="border:1px solid #000">
+			<div id="chat-header" class="card-panel light-green lighten-5">
+			{% block content1 %}
+				{% for u in user %}
+					{% for e in u %}
+				<span class="green-text text-darken-2">Você está logado como: {{e.first_name}}</span>
+					{% endfor %}
+				{% endfor %}
+			{% endblock %}
+			</div>
+			<div class="card-panel white message-content-area">
+
+			</div>
+			<div id="texting-area">
+				<div id="type-message">
+					<textarea id="messagetype"></textarea>	
+				</div>
+			</div>
+		</div>
+
+
+
+		<div id="chat-bar" class="col s2 offset-s2">
+		{% block content2 %}
+			{% for u in others %}
+				{% for e in u %}
+				<div class="row friend-container" id="{{e.id}}">
+					<div class="col s5 user-img-small">
+						{% load static %}
+						<img src="{% static e.image_url %}" alt="My image" width="40px" height="40px" />
+					</div>
+					<div class="col s7 user-friend-info">
+						<span class="u-friend-name"> {{e.first_name}} </span>
+						<span style="float:right;" class="unread-msgs"></span>
+					</div>
+					<!--<p> {{e.id}} </p>-->
+				</div>
+				{% endfor %}
+			{% endfor %}
+		{% endblock %}
+
+		</div>
+	</div>
+</div>
+<footer>
+	
+</footer>
+</body>
+</html>
