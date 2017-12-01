@@ -21,7 +21,8 @@ $(document).ready(function(){
 		stateObj.userCurrConversation = fid;
 		$.ajax({
 		  	url: "http://127.0.0.1:8000/home/" + uid + "/" + fid,
-		  	context: document.body
+		  	context: document.body,
+		  	dataType: "jsonp",
 		}).done(function(response) {
 			console.log(response);
 			console.log(fid);
@@ -34,7 +35,8 @@ $(document).ready(function(){
 
 			$.ajax({
 			  	url: "http://127.0.0.1:8000/home/" + stateObj.userLogged + "/" + stateObj.userCurrConversation + "/" + msg,
-			  	context: document.body
+			  	context: document.body,
+			  	dataType: "jsonp",
 			}).done(function(response) {
 				console.log(response);
 				console.log(fid);
@@ -75,7 +77,8 @@ var updateMessages = function() {
 		var fid  = parseInt(stateObj.userCurrConversation);
 		$.ajax({
 		  	url: "http://127.0.0.1:8000/home/" + uid + "/" + fid,
-		  	context: document.body
+		  	context: document.body,
+		  	dataType: "jsonp"
 		}).done(function(response) {
 			console.log(response);
 			console.log(fid);
@@ -102,7 +105,8 @@ var _checkUnreadMessages = function(u1, u2) {
 	$.ajax({
 		url: "http://127.0.0.1:8000/home/countUnreadMessages/" + u1 + "/" + u2 + "/",
 		context: document.body,
-		async: false
+		async: false,
+		dataType: "jsonp"
 	}).done(function(response) { 
 		if((count = parseInt(response.count)) > 0) {
 			if(count < 10)
@@ -118,7 +122,8 @@ var requestFriends = function(id, async = true) {
 	$.ajax({
 		url: "http://127.0.0.1:8000/home/requestFrieds/" + id + "/",
 		context: document.body,
-		async:async
+		async:async,
+		dataType: "jsonp"
 	}).done(function(response) {
 		//console.log(response);
 		window.friends = response.friends;
