@@ -3,8 +3,23 @@ from django.db import models
 from home.models import AppUser, AppMessage
 from django.db.models import Q
 from django.http import JsonResponse,HttpResponse
+from home.forms import AppUserForm
+from home.forms import AppUserLoginForm
+from django.conf import settings
+from django.conf.urls.static import static
+import time
 
 # Create your views here.
+
+
+
+
+def cad(request):
+    form_class = AppUserForm
+    
+    return render(request, 'cad.html', {
+        'form': form_class,
+    })
 
 
 def index(request, oid):
@@ -54,3 +69,61 @@ def requestFriends(request, userId):
 		'friends' : list(others.values())
 	}
 	return  JsonResponse(data)
+
+
+def addUser(request):
+	form_class = AppUserForm
+
+	if request.method == 'POST':
+		form = AppUserForm(request.POST, request.FILES)
+
+		if(form.is_valid()):
+			first_name = request.POST.get(
+				'first_name', '')
+
+			newuser = AppUser(first_name=first_name)
+			f = request.FILES['image']
+			print(f.name)
+			name = str(time.time())
+			handle_uploaded_file(f,name)
+			newuser.image_url = name
+			newuser.save()
+
+			return index(request, newuser.id)
+		else:
+			print('form invalido')
+	return render( request, 'cad.html', { 'form': form_class, } )
+
+def handle_uploaded_file(f, name):
+    destination = open('home/static/' + name, 'wb+')
+    for chunk in f.chunks():
+        destination.write(chunk)
+    destination.close()
+    print('ok')
+
+def login(request):
+	form_class = AppUserLoginForm
+
+	if request.method == 'POST':
+		form = form_class(data=request.POST)
+
+		if(form.is_valid()):
+			first_name = request.POST.get(
+				'first_name', '')
+
+			query = AppUser.objects.filter(first_name = first_name)
+
+			if(len(query) == 0):
+				print('nao encontrado')
+			else:
+				print('encontrado')
+				user = list(query)[0]
+				return index(request, user.id)
+
+			return render( request, 'login.html', { 'form': form_class, } )
+
+	return render( request, 'login.html', { 'form': form_class, } )
+
+def helper(request):
+
+	return render(request, 'helper.html')

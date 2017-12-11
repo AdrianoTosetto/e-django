@@ -3,10 +3,10 @@ var stateObj = {
 	userCurrConversation:null
 };
 
-var friends;
+var friends = null;
 
 var basicURL    = "http://127.0.0.1:8000/home/";
-var updInterval = 1000; 
+var updInterval = 15000; 
 
 $(document).ready(function(){
 	init();
@@ -94,9 +94,9 @@ var checkAllUnreadMessages = function() {
 }
 
 var checkUnreadMessages = function(id) {
-	for(f of friends) {
-		_checkUnreadMessages(id, f.id);
-	}
+	//for(f of friends) {
+		//_checkUnreadMessages(id, f.id);
+	//}
 }
 
 var _checkUnreadMessages = function(u1, u2) {
@@ -119,6 +119,7 @@ var _checkUnreadMessages = function(u1, u2) {
 }
 
 var requestFriends = function(id, async = true) {
+	console.log("http://127.0.0.1:8000/home/requestFrieds/" + id + "/");
 	$.ajax({
 		url: "http://127.0.0.1:8000/home/requestFrieds/" + id + "/",
 		context: document.body,

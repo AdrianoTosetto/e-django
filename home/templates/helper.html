@@ -17,14 +17,9 @@
 </header>
 
 <div>
-	{% block content %}
-	<h1>Sign up</h1>
-	<form role="form" action="" method="post" enctype="multipart/form-data">
-	    {% csrf_token %}
-	    {{ form.as_p }}
-	    <button type="submit">Submit</button>
-	</form>
-	{% endblock %}
+	<a href="{% url 'cad' %}"><i class="material-icons">Cadastro</i></a>
+	<a href="{% url 'login' %}"><i class="material-icons">Login</i></a>
+</div>
 </div>
 
 
