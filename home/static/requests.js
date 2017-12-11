@@ -6,7 +6,7 @@ var stateObj = {
 var friends = null;
 
 var basicURL    = "http://127.0.0.1:8000/home/";
-var updInterval = 15000; 
+var updInterval = 2000; 
 
 $(document).ready(function(){
 	init();
@@ -73,18 +73,31 @@ var updateMessages = function() {
 	window.setInterval(function(){
 		var url  = document.location.href;
 		var surl = url.split("/");
+		
 		var uid  = parseInt(surl[surl.length-1]);
 		var fid  = parseInt(stateObj.userCurrConversation);
+		console.log(uid);
+		console.log(fid);
 		$.ajax({
-		  	url: "http://127.0.0.1:8000/home/" + uid + "/" + fid,
-		  	context: document.body,
-		  	dataType: "jsonp"
+			statusCode: {
+			    404: function() {
+			      alert( "page not found" );
+			    }
+			  },
+		  	url: "/home/" + uid + "/" + fid,
+		  	//context: document.body,
+		  	//dataType: "json",
+
 		}).done(function(response) {
 			console.log(response);
 			console.log(fid);
 		  	showMessages(response, uid, fid);
-		});
+		}).fail(function(response) {
+    		console.log(response);
+  });
+		console.log("fim");
 	},updInterval);
+
 }
 
 var checkAllUnreadMessages = function() {
