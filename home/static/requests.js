@@ -32,9 +32,9 @@ $(document).ready(function(){
 	$('#messagetype').keyup(function(e){
 		if(e.keyCode == 13) {
 			var msg = $(this).val();
-
+			console.log(stateObj.userLogged + "/" + stateObj.userCurrConversation);
 			$.ajax({
-			  	url: "http://127.0.0.1:8000/home/" + stateObj.userLogged + "/" + stateObj.userCurrConversation + "/" + msg,
+			  	url: "http://127.0.0.1:8000/home/" + stateObj.userLogged + "/" + stateObj.userCurrConversation + "/" + msg + "/",
 			  	context: document.body,
 			  	dataType: "jsonp",
 			}).done(function(response) {
@@ -149,6 +149,7 @@ var init = function() {
 	var surl = url.split("/");
 	var uid  = parseInt(surl[surl.length-1]);
 	stateObj.userLogged = uid;
+	console.log(uid);
 
 	requestFriends(stateObj.userLogged, false);
 	console.log(window.friends)
