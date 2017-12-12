@@ -24,7 +24,7 @@ $(document).ready(function(){
 		  	context: document.body,
 		  	dataType: "jsonp",
 		}).done(function(response) {
-			console.log(response);
+			//console.log(response);
 			console.log(fid);
 		  	showMessages(response, uid, fid);
 		});
@@ -89,11 +89,11 @@ var updateMessages = function() {
 		  	//dataType: "json",
 
 		}).done(function(response) {
-			console.log(response);
+			//console.log(response);
 			console.log(fid);
 		  	showMessages(response, uid, fid);
 		}).fail(function(response) {
-    		console.log(response);
+    		//console.log(response);
   });
 		console.log("fim");
 	},updInterval);

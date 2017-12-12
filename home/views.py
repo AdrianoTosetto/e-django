@@ -37,8 +37,8 @@ def requestMessages(request, u1, u2):
 		'messages' : list(messages.values())
 	}
 	print data
-	#return ret
-	return  JsonResponse({"oi":"ola"})
+	return JsonResponse(data)
+	#return  JsonResponse({"oi":"ola"})
 def requestMessages1(request, u1, u2, lastIdLoaded):
 	messages = (AppMessage.objects.filter(id > lastIdLoaded).filter(whoSent = u1).filter(whoRecv = u2) | AppMessage.objects.filter(whoSent = u2).filter(whoRecv = u1)).order_by('id')
 	for m in messages:
